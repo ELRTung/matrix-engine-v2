@@ -32,7 +32,7 @@ Matrix Engine V2 是一套全自動化的量化交易輔助系統。系統能透
       ├─ 視覺神經：呼叫 Vertex AI 進行多圖聯合推導與 OCR 萃取。
       ├─ 量化核心：Layer 2 矩陣坍縮 (Z-Score, Alpha, 通量計算)。
       └─ 落地儲存：將標準化 JSON 轉譯，透過 Sheets API 寫入資料庫。
-
+```
 
 ## 🛠️ 4. 技術棧 (Tech Stack)
 * **基礎設施**: Google Cloud Platform (Cloud Run, Cloud Functions gen2, Pub/Sub)

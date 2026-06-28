@@ -14,20 +14,21 @@ Matrix Engine V2 是一套全自動化的量化交易輔助系統。系統能透
 ## 🏗️ 3. 系統架構流 (Architecture Data Flow)
 本系統採用「內外場解耦 (Decoupling)」的微服務雙節點設計：
 
+```text
 [ 📱 使用者端 ] 
-   └─ Telegram App (傳送截圖與 `Go` 指令)
+   └─ Telegram App (傳送截圖與 Go 指令)
         ↓ (HTTP POST)
 [ 🛎️ 外場 API 閘道 ] 
-   └─ GCP Cloud Run (`webhook_receiver`) 
+   └─ GCP Cloud Run (webhook_receiver) 
       ├─ 職責：秒回 HTTP 200、暫存圖片 ID 至海馬迴、攔截無效請求。
       └─ 派單：將運算任務打包為 Message，發佈至 Pub/Sub。
         ↓ (Async Message)
 [ 📨 訊息佇列 ] 
-   └─ GCP Pub/Sub (`matrix-task-queue`) 
+   └─ GCP Pub/Sub (matrix-task-queue) 
       └─ 職責：緩衝高併發請求，確保任務不遺失 (At-least-once delivery)。
         ↓ (Push Trigger)
 [ 🧠 內場運算引擎 ] 
-   └─ GCP Cloud Functions gen2 (`background_worker`)
+   └─ GCP Cloud Functions gen2 (background_worker)
       ├─ 視覺神經：呼叫 Vertex AI 進行多圖聯合推導與 OCR 萃取。
       ├─ 量化核心：Layer 2 矩陣坍縮 (Z-Score, Alpha, 通量計算)。
       └─ 落地儲存：將標準化 JSON 轉譯，透過 Sheets API 寫入資料庫。
